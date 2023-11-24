@@ -261,7 +261,7 @@ public class UISystem : GameSystemBase
                     for (int i = 0; i < customLaneDirectionBuffer.Length; i++)
                     {
                         Unity.Mathematics.float3 customLaneDirectionPosition = customLaneDirectionBuffer[i].m_SourcePosition;
-                        if (!sourceExist.ContainsKey(customLaneDirectionPosition))
+                        if (!sourceExist.ContainsKey(customLaneDirectionPosition)) 
                         {
                             customLaneDirectionBuffer.RemoveAt(i);
                             i--;
@@ -386,15 +386,15 @@ public class UISystem : GameSystemBase
     
         var menu = new ArrayList();
         menu.Add(new {x = direction.m_SourcePosition.x, y = direction.m_SourcePosition.y, z = direction.m_SourcePosition.z});
-        menu.Add(new MenuItemOption{label = "Left", key = "m_BanLeft", value = direction.m_Restriction.m_BanLeft.ToString()});
-        menu.Add(new MenuItemOption{label = "Ahead", key = "m_BanStraight", value = direction.m_Restriction.m_BanStraight.ToString()});
-        menu.Add(new MenuItemOption{label = "Right", key = "m_BanRight", value = direction.m_Restriction.m_BanRight.ToString()});
-        menu.Add(new MenuItemOption{label = "U-Turn", key = "m_BanUTurn", value = direction.m_Restriction.m_BanUTurn.ToString()});
-        menu.Add(new MenuItemButton{label = "Save", key = "save", value = "1", engineEventName = "C2VM-TLE-CustomLaneDirectionChanged"});
+        menu.Add(new MenuItemOption{label = "左转", key = "m_BanLeft", value = direction.m_Restriction.m_BanLeft.ToString()}); 
+        menu.Add(new MenuItemOption{label = "直行", key = "m_BanStraight", value = direction.m_Restriction.m_BanStraight.ToString()}); 
+        menu.Add(new MenuItemOption{label = "右转", key = "m_BanRight", value = direction.m_Restriction.m_BanRight.ToString()}); 
+        menu.Add(new MenuItemOption{label = "掉头", key = "m_BanUTurn", value = direction.m_Restriction.m_BanUTurn.ToString()});  
+        menu.Add(new MenuItemButton{label = "保存", key = "save", value = "1", engineEventName = "C2VM-TLE-CustomLaneDirectionChanged"}); 
         return JsonConvert.SerializeObject(menu);
     }
 
-    protected void RequestMenuSave(string value)
+    protected void RequestMenuSave(string value) 
     {
         UpdateSelectedEntity(Entity.Null);
         TriggerUpdateMenu();
@@ -406,49 +406,49 @@ public class UISystem : GameSystemBase
         var menu = new ArrayList();
         if (m_SelectedEntity != Entity.Null)
         {
-            menu.Add(new MenuItemTitle{title = "Three-Way Junction"});
-            menu.Add(new MenuItemPattern{label = "Vanilla", ways = 3, pattern = (int) TrafficLightPatterns.Pattern.Vanilla});
-            menu.Add(new MenuItemPattern{label = "Split Phasing", ways = 3, pattern = (int) TrafficLightPatterns.Pattern.SplitPhasing});
-            menu.Add(new MenuItemTitle{title = "Four-Way Junction"});
-            menu.Add(new MenuItemPattern{label = "Vanilla", ways = 4, pattern = (int) TrafficLightPatterns.Pattern.Vanilla});
-            menu.Add(new MenuItemPattern{label = "Split Phasing", ways = 4, pattern = (int) TrafficLightPatterns.Pattern.SplitPhasing});
-            menu.Add(new MenuItemPattern{label = "Advanced Split Phasing", ways = 4, pattern = (int) TrafficLightPatterns.Pattern.SplitPhasingAdvanced});
-            if (m_CityConfigurationSystem.leftHandTraffic)
+            menu.Add(new MenuItemTitle{title = "三车道路口"}); 
+            menu.Add(new MenuItemPattern{label = "原版", ways = 3, pattern = (int) TrafficLightPatterns.Pattern.Vanilla}); 
+            menu.Add(new MenuItemPattern{label = "Split Phasing", ways = 3, pattern = (int) TrafficLightPatterns.Pattern.SplitPhasing}); 
+            menu.Add(new MenuItemTitle{title = "四车道路口"}); 
+            menu.Add(new MenuItemPattern{label = "原版", ways = 4, pattern = (int) TrafficLightPatterns.Pattern.Vanilla}); 
+            menu.Add(new MenuItemPattern{label = "Split Phasing", ways = 4, pattern = (int) TrafficLightPatterns.Pattern.SplitPhasing}); 
+            menu.Add(new MenuItemPattern{label = "Advanced Split Phasing", ways = 4, pattern = (int) TrafficLightPatterns.Pattern.SplitPhasingAdvanced}); 
+            if (m_CityConfigurationSystem.leftHandTraffic) 
             {
-                menu.Add(new MenuItemPattern{label = "Protected Right-Turns", ways = 4, pattern = (int) TrafficLightPatterns.Pattern.ProtectedCentreTurn});
+                menu.Add(new MenuItemPattern{label = "始终保持右转", ways = 4, pattern = (int) TrafficLightPatterns.Pattern.ProtectedCentreTurn}); 
             }
             else
             {
-                menu.Add(new MenuItemPattern{label = "Protected Left-Turns", ways = 4, pattern = (int) TrafficLightPatterns.Pattern.ProtectedCentreTurn});
+                menu.Add(new MenuItemPattern{label = "始终保持左转", ways = 4, pattern = (int) TrafficLightPatterns.Pattern.ProtectedCentreTurn}); 
             }
             menu.Add(default(MenuItemDivider));
-            menu.Add(new MenuItemTitle{title = "Options"});
-            menu.Add(new MenuItemOption{label = "Exclusive Pedestrian Phase", key = TrafficLightPatterns.Pattern.ExclusivePedestrian.ToString(), value = "1"});
+            menu.Add(new MenuItemTitle{title = "选项"}); 
+            menu.Add(new MenuItemOption{label = "Exclusive Pedestrian Phase", key = TrafficLightPatterns.Pattern.ExclusivePedestrian.ToString(), value = "1"}); 
             if (m_CityConfigurationSystem.leftHandTraffic)
             {
-                menu.Add(new MenuItemOption{label = "Always Green Left-Turns", key = TrafficLightPatterns.Pattern.AlwaysGreenKerbsideTurn.ToString(), value = "0"});
+                menu.Add(new MenuItemOption{label = "左转永远绿灯", key = TrafficLightPatterns.Pattern.AlwaysGreenKerbsideTurn.ToString(), value = "0"});  
             }
             else
             {
-                menu.Add(new MenuItemOption{label = "Always Green Right-Turns", key = TrafficLightPatterns.Pattern.AlwaysGreenKerbsideTurn.ToString(), value = "0"});
+                menu.Add(new MenuItemOption{label = "右转永远绿灯", key = TrafficLightPatterns.Pattern.AlwaysGreenKerbsideTurn.ToString(), value = "0"}); 
             }
             menu.Add(default(MenuItemDivider));
-            menu.Add(new MenuItemTitle{title = "Lane Direction Tool (Experimental)"});
+            menu.Add(new MenuItemTitle{title = "车道方向工具（实验性）"}); 
             if (m_IsLaneManagementToolOpen)
             {
-                menu.Add(new MenuItemButton{label = "Close", key = "status", value = "1", engineEventName = "C2VM-TLE-ToggleLaneManagement"});
+                menu.Add(new MenuItemButton{label = "关闭", key = "status", value = "1", engineEventName = "C2VM-TLE-ToggleLaneManagement"}); 
             }
             else
             {
-                menu.Add(new MenuItemButton{label = "Open", key = "status", value = "0", engineEventName = "C2VM-TLE-ToggleLaneManagement"});
+                menu.Add(new MenuItemButton{label = "开启", key = "status", value = "0", engineEventName = "C2VM-TLE-ToggleLaneManagement"}); 
             }
-            menu.Add(new MenuItemButton{label = "Reset", key = "status", value = "0", engineEventName = "C2VM-TLE-ResetLaneManagement"});
+            menu.Add(new MenuItemButton{label = "重置", key = "status", value = "0", engineEventName = "C2VM-TLE-ResetLaneManagement"}); 
             menu.Add(default(MenuItemDivider));
-            menu.Add(new MenuItemButton{label = "Save", key = "save", value = "1", engineEventName = "C2VM-TLE-RequestMenuSave"});
+            menu.Add(new MenuItemButton{label = "保存", key = "save", value = "1", engineEventName = "C2VM-TLE-RequestMenuSave"});  
         }
         else
         {
-            menu.Add(new MenuItemTitle{title = "<div style=\"margin: 20rem auto; flex: 1; text-align: center;\">Please select a junction</div>"});
+            menu.Add(new MenuItemTitle{title = "<div style=\"margin: 20rem auto; flex: 1; text-align: center;\">请选择一个路口</div>"}); 
         }
         return JsonConvert.SerializeObject(menu);
     }
@@ -511,7 +511,7 @@ public class UISystem : GameSystemBase
                 m_Options[TrafficLightPatterns.Pattern.ExclusivePedestrian.ToString()] == 1
             )
             {
-                m_SelectedPattern[i] = m_SelectedPattern[i] | (int) TrafficLightPatterns.Pattern.ExclusivePedestrian;
+                m_SelectedPattern[i] = m_SelectedPattern[i] | (int) TrafficLightPatterns.Pattern.ExclusivePedestrian; 
             }
             else
             {
